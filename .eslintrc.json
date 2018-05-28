@@ -1,0 +1,31 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "Generator": true,
+    "$Keys": true
+  },
+  "rules": {
+    "no-alert": 0,
+    "no-console": 0,
+    "object-curly-spacing": 0,
+    "object-curly-newline": 0,
+    "import/prefer-default-export": 0,
+    "import/no-duplicates": 1,
+    "arrow-body-style": 0,
+    "no-underscore-dangle": 0,
+    "global-require": 0,
+    "prefer-destructuring": [1, {
+      "array": false,
+      "object": true
+    }],
+    "semi-style": 0
+  }
+}
