@@ -1,0 +1,30 @@
+version: "2"
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    env_file:
+      - .env
+
+  db:
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_PASSWORD=docker
+      - MYSQL_USER=docker
+      - MYSQL_DATABASE=express_rest_api_2018_development
+    build: ./docker/mysql
+    ports:
+      - "3306:3306"
+
+  nginx:
+    build: ./docker/nginx
+    command: nginx -g "daemon off;"
+    links:
+      - app
+    ports:
+      - "80:80"
