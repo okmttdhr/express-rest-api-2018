@@ -16,7 +16,7 @@ const request = {
 
 const id = {
   id: {
-    errorMessage: 'ID must be a number.',
+    errorMessage: 'ID must be numeric.',
     isInt: true,
     toInt: true,
   },
@@ -33,13 +33,13 @@ const detail = checkSchema(id);
 
 const index = checkSchema({
   page: {
-    errorMessage: 'Page must be a number.',
+    errorMessage: 'Page must be numeric.',
     optional: true,
     isInt: true,
     toInt: true,
   },
   per_page: {
-    errorMessage: 'Per-page must be a number.',
+    errorMessage: 'Per-page must be numeric.',
     optional: true,
     isInt: true,
     toInt: true,
