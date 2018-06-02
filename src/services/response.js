@@ -3,7 +3,7 @@ import type {$Response} from 'express';
 import {validationResult} from 'express-validator/check/index';
 import {SEQUELIZE_UNIQUE_CONSTRAINT_ERROR, SEQUELIZE_VALIDATION_ERROR} from '../constants';
 
-export const createPaginationResponse = (page: number, perPage: number, totalCount: number) => {
+const createPaginationResponse = (page: number, perPage: number, totalCount: number) => {
   if (totalCount < perPage) {
     return {
       total_count: totalCount,
@@ -19,21 +19,21 @@ export const createPaginationResponse = (page: number, perPage: number, totalCou
   };
 };
 
-export const invalidFormat = (res: $Response, status: number, message: string = '', errors: Object = {}) => {
+const invalidFormat = (res: $Response, status: number, message: string = '', errors: Object = {}) => {
   res
     .status(status)
     .send({message, errors});
 };
 
-export const responseBadRequest = (res: $Response, errors: Object = {}) => {
+const responseBadRequest = (res: $Response, errors: Object = {}) => {
   invalidFormat(res, 400, 'Invalid parameters', errors);
 };
 
-export const responseNotFound = (res: $Response, errors: Object = {}) => {
+const responseNotFound = (res: $Response, errors: Object = {}) => {
   invalidFormat(res, 404, 'Not Found', errors);
 };
 
-export const responseInternalServerError = (
+const responseInternalServerError = (
   res: $Response,
   errorForLog: Object,
   errors: Object = {},
@@ -46,15 +46,15 @@ export const responseInternalServerError = (
   );
 };
 
-export const responseJson = (res: $Response, json: Object) => {
+const responseJson = (res: $Response, json: Object) => {
   res.status(200).send(json);
 };
 
-export const responseOK = (res: $Response) => {
+const responseOK = (res: $Response) => {
   res.status(200).send({message: 'OK'});
 };
 
-export const responseCreated = (res: $Response, createdId: number) => {
+const responseCreated = (res: $Response, createdId: number) => {
   res.status(201).send({message: 'OK', id: createdId});
 };
 
@@ -66,7 +66,7 @@ const getErrorResponse = (error: Object) => {
   return res;
 };
 
-export const getParameterErrorResponse = (errors: Array<any>) => {
+const getParameterErrorResponse = (errors: Array<any>) => {
   const res = {};
   errors.forEach((e) => {
     res[e.param] = e.msg;
@@ -74,7 +74,7 @@ export const getParameterErrorResponse = (errors: Array<any>) => {
   return res;
 };
 
-export const handleSequelizeError = (res: $Response, error: Object) => {
+const handleSequelizeError = (res: $Response, error: Object) => {
   if (
     error.name === SEQUELIZE_VALIDATION_ERROR ||
     error.name === SEQUELIZE_UNIQUE_CONSTRAINT_ERROR
@@ -89,7 +89,7 @@ export const handleSequelizeError = (res: $Response, error: Object) => {
   return false;
 };
 
-export const handleParameterError = (req: Object, res: $Response) => {
+const handleParameterError = (req: Object, res: $Response) => {
   const parameterError = validationResult(req);
   if (!parameterError.isEmpty()) {
     responseBadRequest(
@@ -102,7 +102,7 @@ export const handleParameterError = (req: Object, res: $Response) => {
   return false;
 };
 
-export const handleNotUpdated = (
+const handleNotUpdated = (
   result: ?Array<Number>,
   res: $Response,
 ) => {
