@@ -12,7 +12,7 @@
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "docker:stg": "docker-compose -f docker-compose.yml -f docker-compose.stg.yml up",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
-    "db": "sequelize --config config/config.js",
+    "db": "sequelize --config config/db.js",
     "flow": "flow",
     "flow:install:typed": "flow-typed install",
     "test": "yarn test:lint && yarn test:unit",
