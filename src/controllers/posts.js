@@ -81,8 +81,8 @@ const index = async (req: $Request, res: $Response) => {
 
     const {query} = (req: Object);
     const postsWhere = createWhereBuilder();
-    postsWhere.equalQuery('title', query.title);
-    postsWhere.equalQuery('body', query.body);
+    postsWhere.likeQuery('title', query.title);
+    postsWhere.likeQuery('body', query.body);
 
     const {limit, offset, page, perPage} = createPaginationQuery(req);
     const posts = await db.Post.findAndCountAll({
