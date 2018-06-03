@@ -17,7 +17,7 @@ const create = async (req: $Request, res: $Response) => {
 
     response.responseCreated(res, post.id);
   } catch (e) {
-    if (response.handleSequelizeError(res, e, (req: Object)._login_user.userType)) {
+    if (response.handleSequelizeError(res, e)) {
       return;
     }
     response.responseInternalServerError(res, e);
@@ -41,7 +41,7 @@ const update = async (req: $Request, res: $Response) => {
 
     response.responseOK(res);
   } catch (e) {
-    if (response.handleSequelizeError(res, e, (req: Object)._login_user.userType)) {
+    if (response.handleSequelizeError(res, e)) {
       return;
     }
     response.responseInternalServerError(res, e);

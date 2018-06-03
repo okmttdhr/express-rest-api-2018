@@ -81,7 +81,6 @@ const handleSequelizeError = (res: $Response, error: Object) => {
   ) {
     responseBadRequest(
       res,
-      'Invalid parameters',
       getErrorResponse(error),
     );
     return true;
@@ -94,7 +93,6 @@ const handleParameterError = (req: Object, res: $Response) => {
   if (!parameterError.isEmpty()) {
     responseBadRequest(
       res,
-      'Invalid parameters',
       getParameterErrorResponse(parameterError.array()),
     );
     return true;
@@ -112,10 +110,7 @@ const handleNotUpdated = (
     return affectedRow === 0;
   };
   if (notUpdated(result)) {
-    responseNotFound(
-      res,
-      'No data was found that meets the used conditions.',
-    );
+    responseNotFound(res);
     return true;
   }
   return false;
