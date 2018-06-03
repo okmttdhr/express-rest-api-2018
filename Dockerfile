@@ -29,9 +29,6 @@ ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 # install yarn
 RUN wget https://yarnpkg.com/downloads/${YARN_VERSION}/yarn_${YARN_VERSION}_all.deb && dpkg -i yarn_${YARN_VERSION}_all.deb
 
-# install node-gyp for bcrypt
-RUN yarn global add node-gyp
-
 WORKDIR /app
 ADD package.json yarn.lock .flowconfig /app/
 RUN yarn --pure-lockfile
