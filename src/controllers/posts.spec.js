@@ -1,4 +1,5 @@
 // @flow
+import {omit} from 'lodash';
 import request from 'supertest';
 import assert from 'assert';
 import {db} from '../models';
@@ -90,6 +91,38 @@ describe('Posts API', () => {
             errors: {
               title: 'Title should be between 1 and 25 characters in length.',
               body: 'Body should be between 1 and 255 characters in length.',
+            },
+          })
+        ;
+      });
+    });
+  });
+  describe('detail', () => {
+    beforeEach(async () => {
+      await mock.post.single();
+    });
+    it('could get a post', async () => {
+      await request(app)
+        .get('/posts/1')
+        .expect(200)
+        .then((r) => {
+          assert.deepEqual(omit(r.body, ['created_at', 'updated_at']), {
+            id: 1,
+            title: 'TITLE0',
+            body: 'BODY0',
+          });
+        })
+      ;
+    });
+
+    describe('validation', () => {
+      it('could check if it is invalid', async () => {
+        await request(app)
+          .get('/posts/invalid')
+          .expect(400, {
+            message: 'Invalid parameters',
+            errors: {
+              id: 'ID must be numeric.',
             },
           })
         ;
