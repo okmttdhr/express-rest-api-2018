@@ -1,7 +1,7 @@
 // @flow
 import request from 'supertest';
 // import assert from 'assert';
-import {sequelize} from '../models';
+// import {sequelize} from '../models';
 import {cleanDatabase} from '../test-helpers';
 import {app} from '../app';
 

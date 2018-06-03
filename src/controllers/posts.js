@@ -1,6 +1,6 @@
 // @flow
 import type { $Request, $Response } from 'express';
-import {response, createPaginationQuery, createOrderQuery} from '../services';
+import {response, query} from '../services';
 import {db} from '../models';
 import {createWhereBuilder} from './common/';
 
@@ -57,7 +57,7 @@ const detail = async (req: $Request, res: $Response) => {
     const post = await db.Post.findById(req.params.id);
 
     if (!post) {
-      response.responseNotFound(res, 'Post not found');
+      response.responseNotFound(res, 'Post');
       return;
     }
 
@@ -79,21 +79,21 @@ const index = async (req: $Request, res: $Response) => {
       return;
     }
 
-    const {query} = (req: Object);
+    const q = (req: Object).query;
     const postsWhere = createWhereBuilder();
-    postsWhere.likeQuery('title', query.title);
-    postsWhere.likeQuery('body', query.body);
+    postsWhere.likeQuery('title', q.title);
+    postsWhere.likeQuery('body', q.body);
 
-    const {limit, offset, page, perPage} = createPaginationQuery(req);
+    const {limit, offset, page, perPage} = query.createPaginationQuery(req);
     const posts = await db.Post.findAndCountAll({
       where: postsWhere.generateQuery(),
       offset,
       limit,
-      order: createOrderQuery(req),
+      order: query.createOrderQuery(req),
     });
 
     if (posts.rows.length === 0) {
-      response.responseNotFound(res, 'Posts not found');
+      response.responseNotFound(res, 'Posts');
       return;
     }
 

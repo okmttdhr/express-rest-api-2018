@@ -29,8 +29,9 @@ const responseBadRequest = (res: $Response, errors: Object = {}) => {
   invalidFormat(res, 400, 'Invalid parameters', errors);
 };
 
-const responseNotFound = (res: $Response, errors: Object = {}) => {
-  invalidFormat(res, 404, 'Not Found', errors);
+const responseNotFound = (res: $Response, resourse: string = '', errors: Object = {}) => {
+  const r = resourse ? `${resourse} ` : '';
+  invalidFormat(res, 404, `${r}Not Found`, errors);
 };
 
 const responseInternalServerError = (
@@ -109,7 +110,7 @@ const handleNotUpdated = (
     const affectedRow = result[0];
     return affectedRow === 0;
   };
-  if (notUpdated(result)) {
+  if (notUpdated()) {
     responseNotFound(res);
     return true;
   }
