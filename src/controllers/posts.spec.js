@@ -129,4 +129,76 @@ describe('Posts API', () => {
       });
     });
   });
+  describe('index', () => {
+    beforeEach(async () => {
+      await mock.post.multi();
+    });
+    it('could get posts', async () => {
+      await request(app)
+        .get('/posts')
+        .expect(200)
+        .then((r) => {
+          assert.deepEqual(omit(r.body, ['posts']), {
+            current_page: 1,
+            total_count: 5,
+            total_page: 1,
+          });
+          [4, 3, 2, 1, 0].forEach((n, i) => {
+            assert.deepEqual(omit(r.body.posts[i], ['created_at', 'updated_at']), {
+              id: n + 1,
+              title: `TITLE${n}`,
+              body: `BODY${n}`,
+            });
+          });
+        })
+      ;
+    });
+    it('pagination', async () => {
+      await request(app)
+        .get('/posts?page=2&per_page=2')
+        .expect(200)
+        .then((r) => {
+          assert.deepEqual(omit(r.body, ['posts']), {
+            current_page: 2,
+            total_count: 5,
+            total_page: 3,
+          });
+          [2, 1].forEach((n, i) => {
+            assert.deepEqual(omit(r.body.posts[i], ['created_at', 'updated_at']), {
+              id: n + 1,
+              title: `TITLE${n}`,
+              body: `BODY${n}`,
+            });
+          });
+        })
+      ;
+    });
+    it('order', async () => {
+      await request(app)
+        .get('/posts?order=desc&order_key=title')
+        .expect(200)
+        .then((r) => {
+          const ids = r.body.posts.map(p => p.id);
+          assert.deepEqual(ids, [5, 4, 3, 2, 1]);
+        })
+      ;
+    });
+
+    describe('validation', () => {
+      it('could check if it is invalid', async () => {
+        await request(app)
+          .get('/posts?page=invalid&per_page=invalid&order=invalid&order_key=invalid')
+          .expect(400, {
+            message: 'Invalid parameters',
+            errors: {
+              order: 'Invalid Order.',
+              order_key: 'Invalid Order-key.',
+              page: 'Page must be numeric.',
+              per_page: 'Per-page must be numeric.',
+            },
+          })
+        ;
+      });
+    });
+  });
 });
