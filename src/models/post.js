@@ -14,7 +14,7 @@ export default (sequelize: Sequelize, dataTypes: DataTypes) => {
         .config,
     },
     body: {
-      type: dataTypes.CONTENT,
+      type: dataTypes.STRING,
       allowNull: false,
       defaultValue: '',
       validate: Name('Body')

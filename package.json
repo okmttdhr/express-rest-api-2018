@@ -4,7 +4,6 @@
   "scripts": {
     "postinstall": "yarn flow:install:typed",
     "build": "babel src --out-dir dist/src --ignore spec.js && babel config --out-dir dist/config --copy-files",
-    "build:batch": "babel batch --out-dir dist/batch --ignore spec.js && babel config --out-dir dist/config --copy-files",
     "start:dev": "NODE_ENV=development && yarn db:migrate && nodemon --exec babel-node src/index.js",
     "start:stg": "NODE_ENV=staging && yarn build && yarn db:migrate && babel-node dist/src/index.js",
     "start:prod": "NODE_ENV=production && yarn build && yarn db:migrate && babel-node dist/src/index.js",
@@ -13,17 +12,14 @@
     "docker:stg": "docker-compose -f docker-compose.yml -f docker-compose.stg.yml up",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
     "db": "sequelize --config config/db.js",
+    "db:migrate": "yarn db db:migrate",
     "flow": "flow",
     "flow:install:typed": "flow-typed install",
     "test": "yarn test:lint && yarn test:unit",
     "test:unit": "yarn mocha 'src/**/*.spec.js'",
-    "test:unit:controllers": "yarn mocha 'src/controllers/**/*.spec.js'",
-    "test:unit:models": "yarn mocha 'src/*.spec.js'",
-    "test:unit:middlewares": "yarn mocha 'src/middlewares/*.spec.js'",
-    "test:unit:services": "yarn mocha 'src/services/*.spec.js'",
     "test:unit:target": "yarn mocha",
-    "mocha": "NODE_ENV=test mocha --require mocha-babel --timeout 20000 --exit",
-    "test:lint": "eslint ./src/"
+    "test:lint": "eslint ./src/",
+    "mocha": "NODE_ENV=test mocha --require mocha-babel --timeout 20000 --exit"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
