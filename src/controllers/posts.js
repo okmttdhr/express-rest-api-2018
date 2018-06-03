@@ -30,7 +30,7 @@ const update = async (req: $Request, res: $Response) => {
       return;
     }
     const {body} = (req: Object);
-    const post = await db.Post.create({
+    const post = await db.Post.update({
       title: body.title,
       body: body.body,
     }, {where: {id: req.params.id}});
