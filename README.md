@@ -28,8 +28,8 @@
 ## Getting Started
 
 ```bash
-git clone https://github.com/okmttdhr/express-rest-api-2018.git
-cd express-resr-api-2018
+$ git clone https://github.com/okmttdhr/express-rest-api-2018.git
+$ cd express-resr-api-2018
 ```
 
 ```bash
@@ -38,19 +38,48 @@ $ cp .env.sample .env
 
 ```bash
 $ yarn docker:build
-$ docker-compose run app yarn install
-```
-
-```bash
 $ yarn docker:dev
 ```
 
-```sh
-docker exec -it expressrestapi2018_app_1 /bin/bash
-docker exec -it expressrestapi2018_db_1 /bin/bash
-mysql -u root -pdocker
+## Connect to MySQL
 
-NODE_ENV=test yarn db db:drop
-NODE_ENV=test yarn db db:create
-NODE_ENV=test yarn db db:migrate
+```bash
+$ docker exec -it expressrestapi2018_db_1 /bin/bash
+root@id:/\# mysql -u root -pdocker
+mysql> show databases;
++-----------------------------------+
+| Database                          |
++-----------------------------------+
+| information_schema                |
+| express_rest_api_2018_development |
+| express_rest_api_2018_test        |
+| mysql                             |
+| performance_schema                |
++-----------------------------------+
+4 rows in set (0.00 sec)
+```
+
+## Testing
+
+Run migration if you haven't yet.
+
+```bash
+$ docker exec -it expressrestapi2018_app_1 /bin/bash
+root@id:/app# NODE_ENV=test yarn db db:migrate
+```
+
+All test's command here.
+
+```bash
+$ docker exec -it expressrestapi2018_app_1 /bin/bash
+# all the tests
+root:/app# yarn test
+# all the unit tests
+root:/app# yarn test:unit
+# only target file's test
+root:/app# yarn test:unit:target ./path/to/file.js
+# only target file's test with Node debugging client
+root:/app# yarn test:unit:target debug ./path/to/file.js
+# linting
+root:/app# yarn test:lint
 ```
