@@ -1,5 +1,9 @@
 
-# express-rest-api-2018
+# Express Rest API 2018
+
+Boilerplate/Starter Project for building RESTful API using Node.js, Express and Sequelize.
+
+(Influenced by [express-rest-es2017-boilerplate](https://github.com/danielfsousa/express-rest-es2017-boilerplate)).
 
 ## Features
 
@@ -103,3 +107,7 @@ mysql> show databases;
 ### Creating Model and Migration
 
 - [Creating first Model (and Migration)](http://docs.sequelizejs.com/manual/tutorial/migrations.html#creating-first-model-and-migration-)
+
+## License
+
+MIT
