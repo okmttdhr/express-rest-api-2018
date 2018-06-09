@@ -41,6 +41,18 @@ $ yarn docker:build
 $ yarn docker:dev
 ```
 
+Now your app is running.
+
+```bash
+$ curl -X POST -H 'Content-Type:application/json' -d '{"title": "ttttt", "body": "bbbbb"}' http://localhost/posts
+{"message":"OK","id":1}
+```
+
+```bash
+$ curl -H 'Content-Type:application/json' -X GET http://localhost/posts
+{"posts":[{"id":1,"title":"ttttt","body":"bbbbb","created_at":"2018-06-09T00:43:21.000Z","updated_at":"2018-06-09T00:43:21.000Z"}],"total_count":1,"current_page":1,"total_page":1}
+```
+
 ## Testing
 
 Run migration if you haven't yet.
@@ -50,7 +62,7 @@ $ docker exec -it expressrestapi2018_app_1 /bin/bash
 root@id:/app# NODE_ENV=test yarn db db:migrate
 ```
 
-All test's command here.
+All the test's command here.
 
 ```bash
 $ docker exec -it expressrestapi2018_app_1 /bin/bash
